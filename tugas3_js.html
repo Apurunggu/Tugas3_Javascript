@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tugas Pertemuan 3 - Javascript</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 60%;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    thead {
+      background-color: #f40c0c;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sistem Manajemen Produk Toko</h2>
+  <table id="tabelProduk">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nama Produk</th>
+        <th>Harga</th>
+        <th>Stok</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data produk akan dimasukkan lewat JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    // Array produk toko
+    let produkToko = [
+      { id: 1, nama: "Laptop", harga: 7000000, stok: 5 },
+      { id: 2, nama: "Mouse", harga: 200000, stok: 10 },
+      { id: 3, nama: "Keyboard", harga: 350000, stok: 7 }
+    ];
+
+    // Fungsi menampilkan produk ke tabel
+    function tampilkanProduk() {
+      const tbody = document.querySelector("#tabelProduk tbody");
+      tbody.innerHTML = ""; // kosongkan isi tabel sebelum update
+
+      produkToko.forEach(p => {
+        let row = `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.nama}</td>
+            <td>Rp ${p.harga.toLocaleString("id-ID")}</td>
+            <td>${p.stok}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    // Fungsi menambah produk baru
+    function tambahProduk(nama, harga, stok) {
+      const idBaru = produkToko.length > 0 ? produkToko[produkToko.length - 1].id + 1 : 1;
+      produkToko.push({ id: idBaru, nama: nama, harga: harga, stok: stok });
+      tampilkanProduk();
+    }
+
+    // Fungsi menghapus produk berdasarkan id
+    function hapusProduk(id) {
+      produkToko = produkToko.filter(p => p.id !== id);
+      tampilkanProduk();
+    }
+
+    // Contoh penggunaan fungsi
+    tampilkanProduk(); // tampilkan produk awal
+    tambahProduk("Headset", 500000, 8); // tambah produk baru
+    hapusProduk(2); // hapus produk dengan id = 2 (Mouse)
+  </script>
+</body>
+</html>
